@@ -1,46 +1,76 @@
-{
-    "KDP-000001": {
-        "title": "Теория",
-        "path": "99 Шаблоны\\Теория.md",
-        "object_type": "NOTE",
-        "created": "2026-07-17T11:18:38.416350",
-        "updated": "2026-07-17T11:18:50.431757",
-        "size": 402,
-        "tags": [],
-        "aliases": [],
-        "links": []
-    },
-    "KDP-000002": {
-        "title": "CHANGELOG",
-        "path": "CHANGELOG.md",
-        "object_type": "NOTE",
-        "created": "2026-07-17T11:17:58.473755",
-        "updated": "2026-07-17T17:42:17.546327",
-        "size": 432,
-        "tags": [],
-        "aliases": [],
-        "links": []
-    },
-    "KDP-000003": {
-        "title": "🏠 Главная",
-        "path": "🏠 Главная.md",
-        "object_type": "NOTE",
-        "created": "2026-07-17T11:11:03.742849",
-        "updated": "2026-07-17T11:23:28.514843",
-        "size": 1045,
-        "tags": [],
-        "aliases": [],
-        "links": []
-    },
-    "KDP-000004": {
-        "title": "📖 Сегодня",
-        "path": "📖 Сегодня.md",
-        "object_type": "NOTE",
-        "created": "2026-07-17T11:23:37.177290",
-        "updated": "2026-07-17T11:23:43.490183",
-        "size": 270,
-        "tags": [],
-        "aliases": [],
-        "links": []
-    }
-}
+from pathlib import Path
+from datetime import datetime
+
+from config import VAULT_PATH
+
+
+def save_message(text: str):
+
+    now = datetime.now()
+
+    # Создаем структуру Inbox/Год/Месяц/День
+
+    folder = (
+        Path(VAULT_PATH)
+        / "Inbox"
+        / now.strftime("%Y")
+        / now.strftime("%m")
+        / now.strftime("%d")
+    )
+
+    folder.mkdir(parents=True, exist_ok=True)
+
+    filename = now.strftime("%H-%M-%S") + ".md"
+
+    filepath = folder / filename
+
+    # Разделяем сообщение
+
+    lines = text.strip().splitlines()
+
+    if lines:
+
+        title = lines[0].strip()
+
+        body = "\n".join(lines[1:]).strip()
+
+    else:
+
+        title = "Без названия"
+
+        body = ""
+
+    # Если тело отсутствует,
+    # не дублируем заголовок
+
+    if body:
+
+        markdown = f"""---
+status: NEW
+created: {now.strftime("%Y-%m-%d %H:%M:%S")}
+source: Telegram
+
+---
+
+# {title}
+
+{body}
+"""
+
+    else:
+
+        markdown = f"""---
+status: NEW
+created: {now.strftime("%Y-%m-%d %H:%M:%S")}
+source: Telegram
+
+---
+
+# {title}
+"""
+
+    with open(filepath, "w", encoding="utf-8") as f:
+
+        f.write(markdown)
+
+    return filepath
