@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CHANGELOG.md",
+                "file": "Inbox/2026/07/17/17-55-50.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "CHANGELOG"
+              "title": "17-55-50"
             }
           }
         ]
@@ -189,8 +189,13 @@
   },
   "active": "f816891d20506c27",
   "lastOpenFiles": [
-    "CHANGELOG.md",
+    "Inbox/2026-07-17_17-51-34.md",
+    "Inbox/2026/07/17/17-55-50.md",
+    "Inbox/2026/07/17",
+    "Inbox/2026/07",
+    "Inbox/2026",
     "Inbox/2026-07-17_17-10-51.md",
+    "CHANGELOG.md",
     "Inbox",
     "Новая папка",
     "KnowledgeBot",
